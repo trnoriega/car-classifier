@@ -50,13 +50,12 @@ def pickle_variable_to_path(variable, filename, save_dir):
     with open(file_path, 'wb') as file:
         pickle.dump(variable, file)
 
-def display_add_train_time(start_time, end_time, history_dicto=None):
+def display_add_train_time(start_time, end_time, history_dicto):
     """ TODO """
     train_time_seconds = round(end_time - start_time, 0)
     train_time_minutes = round(train_time_seconds/60, 0)
-    if history_dicto:
-        history_dicto['train_time_seconds'] = train_time_seconds
-        history_dicto['train_time_minutes'] = train_time_minutes
+    history_dicto['train_time_seconds'] = train_time_seconds
+    history_dicto['train_time_minutes'] = train_time_minutes
     return print('traing took: {} minutes' .format(train_time_minutes))
 
 
@@ -77,4 +76,12 @@ def save_model_and_history(model, history_dicto, filename, save_dir):
         )
 
     pickle_variable_to_path(history_dicto, filename, save_dir)
+
+def time_save_model(model, history_dicto, start_time, end_time, filename, save_dir):
+    """
+    combines display_add_train_time and save_model_and_history into a single function
+    """
+    display_add_train_time(start_time, end_time, history_dicto)
+    save_model_and_history(model, history_dicto, filename, save_dir)
+
    
