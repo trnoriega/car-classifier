@@ -26,7 +26,7 @@ def pickle_variable_to_path(variable, filename, save_dir):
 
     Inputs:
     -variable: variable to save. Must be pickle-able
-    -filename: Desired filename including extension. i.e: 'variable.pkl'
+    -filename: Desired filename WITHOUT extension. i.e: 'variable'
     -save_dir: path to directory in which the image is to be saved
 
     Output:
@@ -36,7 +36,7 @@ def pickle_variable_to_path(variable, filename, save_dir):
     import pickle
 
     # Exit if file already exists
-    file_path = os.path.join(save_dir, filename)
+    file_path = os.path.join(save_dir, filename+'.pkl')
     if os.path.isfile(file_path):
         return print('\n********** pickle file already exists **********\n')
 
@@ -66,7 +66,7 @@ def save_model_and_history(model, history_dicto, filename, save_dir):
     h5_file_path = os.path.join(save_dir, filename + '.h5')
 
     if not os.path.isdir(save_dir):
-        os.mkdir(save_dir)
+        os.makedirs(save_dir)
 
     if not os.path.isfile(h5_file_path):
         model.save_weights(h5_file_path)
