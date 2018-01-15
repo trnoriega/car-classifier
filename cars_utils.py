@@ -84,4 +84,41 @@ def time_save_model(model, history_dicto, start_time, end_time, filename, save_d
     display_add_train_time(start_time, end_time, history_dicto)
     save_model_and_history(model, history_dicto, filename, save_dir)
 
-   
+def plot_metrics(history_dicto, key_list, fig_size=(10, 25)):
+    """
+    Plots training and validation metrics found in history_dicto
+    and specified in key_list into Jupyter Notebook
+
+    Inputs:
+    -history_dicto: dictionary attached to history object output by keras fit methods
+    -key_list: list of strings with key names to plot. DOES NOT INCLUDE 'val_metric' keys
+               Those are generated automatically
+    -fig_size: tuple with (width, height) in inches. default: (10, 25)
+
+    Output:
+    plot of figure in Jupyter notebook
+    """
+    import matplotlib.pyplot as plt
+
+    fig, axes = plt.subplots(len(key_list), 1)
+    fig.set_size_inches(fig_size)
+    axes = axes.reshape(-1)
+
+    for i, key in enumerate(key_list):
+        dependent = history_dicto.get(key)
+        epochs = range(1, 1 + len(dependent))
+        val_dependent = history_dicto.get('val_' + key)
+        assert len(dependent) == len(val_dependent),\
+        'validation and train sets do not match'
+
+        try:
+            axes[i].plot(epochs, dependent, label='Training {}'.format(key))
+            axes[i].plot(epochs, val_dependent, label='Validation {}'.format(key))
+            axes[i].set_title('Training and validation {}'.format(key))
+            axes[i].set_ylabel(key)
+            axes[i].set_xlabel('epochs')
+            axes[i].legend()
+        except Exception as expt:
+            print(expt)
+
+    return plt.show()
