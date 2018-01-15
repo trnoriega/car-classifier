@@ -2,13 +2,13 @@
 Reusable functions for the cars project
 """
 
-def save_matplotlib_fig(fig, file_name, save_dir):
+def save_matplotlib_fig(fig, filename, save_dir):
     """
     Saves matplot figure to specified path with given file name
 
     Inputs:
     -fig: matplotlib figure object to save
-    -file_name: Desired filename including extension. i.e: 'image.png'
+    -filename: Desired filename including extension. i.e: 'image.png'
     -save_dir: path to directory in which the image is to be saved
 
     Output:
@@ -16,17 +16,17 @@ def save_matplotlib_fig(fig, file_name, save_dir):
     """
     import os
 
-    save_image_path = os.path.join(save_dir, file_name)
+    save_image_path = os.path.join(save_dir, filename)
     fig.savefig(save_image_path)
 
 
-def pickle_variable_to_path(variable, file_name, save_dir):
+def pickle_variable_to_path(variable, filename, save_dir):
     """
     Pickles variable to specified path with given file name
 
     Inputs:
     -variable: variable to save. Must be pickle-able
-    -file_name: Desired filename including extension. i.e: 'variable.pkl'
+    -filename: Desired filename including extension. i.e: 'variable.pkl'
     -save_dir: path to directory in which the image is to be saved
 
     Output:
@@ -36,9 +36,9 @@ def pickle_variable_to_path(variable, file_name, save_dir):
     import pickle
 
     # Exit if file already exists
-    file_path = os.path.join(save_dir, file_name)
+    file_path = os.path.join(save_dir, filename)
     if os.path.isfile(file_path):
-        return print('file already exists')
+        return print('\n********** pickle file already exists **********\n')
 
     # Check if save directory already exists, if it doesn't make it
     if not os.path.isdir(save_dir):
@@ -49,4 +49,32 @@ def pickle_variable_to_path(variable, file_name, save_dir):
 
     with open(file_path, 'wb') as file:
         pickle.dump(variable, file)
+
+def display_add_train_time(start_time, end_time, history_dicto=None):
+    """ TODO """
+    train_time_seconds = round(end_time - start_time, 0)
+    train_time_minutes = round(train_time_seconds/60, 0)
+    if history_dicto:
+        history_dicto['train_time_seconds'] = train_time_seconds
+        history_dicto['train_time_minutes'] = train_time_minutes
+    return print('traing took: {} minutes' .format(train_time_minutes))
+
+
+def save_model_and_history(model, history_dicto, filename, save_dir):
+    """ TODO """
+    import os
+
+    h5_file_path = os.path.join(save_dir, filename + '.h5')
+
+    if not os.path.isdir(save_dir):
+        os.mkdir(save_dir)
+
+    if not os.path.isfile(h5_file_path):
+        model.save_weights(h5_file_path)
+    else:
+        return print(
+            '\n********** h5 file already exists **********\n pickle file not saved'
+        )
+
+    pickle_variable_to_path(history_dicto, filename, save_dir)
    
