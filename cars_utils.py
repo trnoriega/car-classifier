@@ -17,6 +17,8 @@ def save_matplotlib_fig(fig, filename, save_dir):
     import os
 
     save_image_path = os.path.join(save_dir, filename)
+    if not os.path.isdir(save_dir):
+        os.makedirs(save_dir)
     fig.savefig(save_image_path)
 
 
