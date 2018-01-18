@@ -5,6 +5,7 @@ data/
 # vscode #
 ##########
 .vscode
+*.code-workspace
 
 # python-specifics #
 ###################
