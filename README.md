@@ -1,6 +1,8 @@
-# Experiments for the Development of [CarMatch](www.thomasnoriega.com/carmatch)
+# Experiments for the Development of [CarMatch](http://www.thomasnoriega.com/carmatch/)
 
-This repository contains the experiments I ran to train an Inception_v3 2D convolutional neural network with the Keras framework (and TensorFlow backend) to accurately classify 196 different cars.  
+This repository contains the experiments I ran to train an Inception_v3 2D convolutional neural network with the Keras framework (and TensorFlow backend) to accurately classify 196 different cars.
+
+The results are implemented in a django website whose code lives in the [car-website](https://github.com/trnoriega/car-website) repository.
 
 ### Making the dataset usable
 In the [1_make_dataset_usable](1_make_dataset_usable.ipynb) notebook I make the [cars dataset](http://ai.stanford.edu/~jkrause/cars/car_dataset.html) usable.
